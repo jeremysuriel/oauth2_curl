@@ -1,0 +1,66 @@
++-------------+
+| Oauth2 Curl |
++-------------+
+
+Oauth2 Curl is taken from the Twurl codebase and modified to offer
+generic Oauth2 consumer access to an existing Oauth2 provider.
+
+See Twurl for more info ( http://github.com/marcel/twurl )
+
++-----------------+
+| Getting Started |
++-----------------+
+
+The first thing you have to do is register an OAuth2 application
+to get a consumer key and secret.
+  
+
+When you have your consumer key and its secret you authorize
+your Oauth account to make API requests with your consumer key
+and secret.
+
+  % oauth2_curl authorize --consumer-key the_key       \
+               			  --consumer-secret the_secret \
+						  --base-path /api/v1 \
+						  --authorize-path /api/v1/oauth/authorize \
+						  --access-token-path /api/v1/oauth/access_token \ 
+						  --host jeremy.assistly.local:3000
+
+
+This will return an URL that you should open up in your browser.
+Authenticate, and then enter the returned PIN back into
+the terminal.  Assuming all that works well, you will be authorized
+to make requests with the API. 
+
+If your consumer application has xAuth enabled, then you can use
+a variant of the above
+
+  % oauth2_curl authorize -u username -p password      \
+                    --consumer-key the_key       \
+                    --consumer-secret the_secret
+
+And, again assuming your username, password, key and secret is
+correct, will authorize you in one step.
+
++-----------------+
+| Making Requests |
++-----------------+
+
+The simplest request just requires that you specify the path you
+want to request.
+
+  % oauth2_curl /some_api_path/api_action.json
+
+Similar to curl, a GET request is performed by default.
+
+You can implicitly perform a POST request by passing the -d option,
+which specifies POST parameters.
+
+  % oauth2_curl -d 'status=Testing twurl' /some_api_path/update_something
+
+
++--------------+
+| Contributors |
++--------------+
+
+Jeremy Suriel <jeremy@assistly.com> / @jrmey
